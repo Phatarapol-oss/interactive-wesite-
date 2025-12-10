@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thai Food Heritage + Soft Power</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;700&family=Prompt:wght@300;400;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      /* จาก PART 1 */
+      --bg-color: #181009;
+      --gold-color: #cfa166;
+      --text-color: #e8d5b5;
+      --card-bg: rgba(42, 27, 18, 0.8);
+      /* จาก PART 2 */
+      --bg-page: #f1f3f6;
+      --bg-card: #f5e6d7;
+      --accent: #c46a2c;
+      --accent-soft: #f9c48b;
+      --text-main: #4a3a33;
+      --text-sub: #7a6a60;
+      --blue: #2c7fd8;
+      --gold: #cfa166;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #181009;
+      color: var(--text-color);
+      font-family: 'Sarabun', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* ---------- TIMELINE BACKGROUND ---------- */
+    .texture-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+      opacity: 0.07;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: overlay;
+    }
+
+    .parallax-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .ingredient {
+      position: absolute;
+      opacity: 0.6;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    }
+
+    /* ---------- HEADER (รูปเต็มจอ) ---------- */
+    header.hero-header {
+      height: 120vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      background: url("assets/images/หน้าแรก.png") center bottom / cover no-repeat;
+    }
+
+    .header-content {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .main-title {
+      font-size: 4rem;
+      color: var(--gold-color);
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .subtitle-hero {
+      font-size: 1.5rem;
+      font-style: italic;
+      border-top: 1px solid rgba(207, 161, 102, 0.3);
+      border-bottom: 1px solid rgba(207, 161, 102, 0.3);
+      padding: 1rem 2rem;
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 999px;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      color: var(--gold-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.8rem;
+      letter-spacing: 0.2rem;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, var(--gold-color), transparent);
+      margin-top: 10px;
+    }
+
+    @keyframes bounce {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(10px);
+      }
+    }
+
+    /* ---------- TIMELINE SECTION ---------- */
+    .timeline-container {
+      position: relative;
+      padding-bottom: 100px;
+      max-width: 1200px;
+      margin: 0 auto;
+      z-index: 10;
+    }
+
+    .golden-line {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--gold-color);
+      transform: translateX(-50%) scaleY(0);
+      transform-origin: top;
+      box-shadow: 0 0 15px var(--gold-color);
+      z-index: 0;
+    }
+
+    .card {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      margin: 100px 20px;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    .card:nth-child(even) {
+      flex-direction: row;
+    }
+
+    .card:nth-child(odd) {
+      flex-direction: row-reverse;
+    }
+
+    .card-image-wrapper {
+      flex: 1;
+      position: relative;
+    }
+
+    .card-image {
+      width: 580px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 8px;
+      filter: sepia(0.2);
+      transition: all 0.5s ease;
+    }
+
+    .card-image:hover {
+      filter: sepia(0);
+      transform: scale(1.02);
+    }
+
+    .flag-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 2rem;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      border-radius: 5px;
+      padding: 5px;
+      border: 1px solid rgba(207, 161, 102, 0.5);
+    }
+
+    .card-content {
+      flex: 1;
+      position: relative;
+    }
+
+    .year-text {
+      position: relative;
+      display: block;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffffff;
+      font-family: 'Sarabun', sans-serif;
+      margin-bottom: 0.25rem;
+    }
+
+    .location-tag {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--gold-color);
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 2.5rem;
+      color: #fff8e7;
+      margin-bottom: 1rem;
+      font-family: 'Sarabun', sans-serif;
+      font-weight: 700;
+    }
+
+    .card-desc {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: rgba(232, 213, 181, 0.9);
+      font-weight: 300;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 0;
+      background: #100a06;
+      border-top: 1px solid #4a3b32;
+      color: #8a6a6a;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ---------- MAP JOURNEY STYLES ---------- */
+    .thai-header {
+      font-family: 'Prompt', sans-serif;
+    }
+
+    .map-fixed-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 0;
+      overflow: hidden;
+      background: #ffce80;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .map-inner {
+      width: 100%;
+      max-width: 1600px;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    .world-map-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      filter: sepia(1) saturate(5) brightness(0.25) contrast(1.2);
+      opacity: 0.8;
+    }
+
+    .map-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .route-path {
+      fill: none;
+      stroke: #ffdb58;
+      stroke-width: 2px;
+      stroke-dasharray: 2000;
+      stroke-dashoffset: 2000;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 5px rgba(255, 219, 88, 0.8));
+    }
+
+    .marker {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: red;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px red;
+      z-index: 3;
+    }
+
+    .flag-icon {
+      position: absolute;
+      font-size: 2rem;
+      transform: translate(-50%, -100%) scale(0);
+      z-index: 4;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+    }
+
+    .loc-th {
+      left: 77.2%;
+      top: 47.0%;
+    }
+
+    .loc-jp {
+      left: 86.8%;
+      top: 33.5%;
+    }
+
+    .loc-cn {
+      left: 79.7%;
+      top: 31.0%;
+    }
+
+    .loc-au {
+      left: 90.7%;
+      top: 71.0%;
+    }
+
+    .loc-fr {
+      left: 48.2%;
+      top: 30.0%;
+    }
+
+    .loc-us {
+      left: 26.9%;
+      top: 33.0%;
+    }
+
+    .map-texture-overlay,
+    .map-vignette-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 10;
+    }
+
+    .scroll-container {
+      position: relative;
+      z-index: 20;
+    }
+
+    .section {
+      min-height: 110vh;
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      position: relative;
+      justify-content: flex-start;
+    }
+
+    .section-end {
+      min-height: 110vh;
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      position: relative;
+      justify-content: flex-end;
+    }
+
+    #sec-intro,
+    #sec-outro {
+      justify-content: center;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    .content-card {
+      background: rgba(30, 25, 20, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      width: 50vw;
+      max-width: 900px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      padding: 0;
+      overflow: hidden;
+      transform: translateY(50px);
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      background: linear-gradient(90deg, rgba(238, 187, 77, 0.1) 0%, transparent 100%);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(238, 187, 77, 0.2);
+      position: relative;
+    }
+
+    .header-text h2 {
+      font-size: 2.5rem;
+      color: #ffdb58;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .header-text .sub-title {
+      font-family: 'Prompt', sans-serif;
+      font-size: 1.1rem;
+      color: #fff;
+      opacity: 0.9;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .flag-badge-map {
+      width: 80px;
+      height: 50px;
+      border-radius: 0px;
+      border: 3px solid #ffdb58;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(238, 187, 77, 0.4);
+      flex-shrink: 0;
+      background: #000;
+    }
+
+    .flag-badge-map img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+    }
+
+    .story-content .quote {
+      font-size: 1.4rem;
+      font-style: italic;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      border-left: 3px solid #ff6b6b;
+      padding-left: 15px;
+    }
+
+    .story-content .desc {
+      font-size: 1rem;
+      color: #dcdcdc;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .food-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      position: relative;
+    }
+
+    .food-card {
+      padding: 6px 6px 25px 6px;
+      border-radius: 4px;
+      transform: rotate(-2deg);
+      transition: transform 0.3s ease, z-index 0.3s;
+      cursor: pointer;
+      width: 80%;
+      align-self: center;
+    }
+
+    .food-card:nth-child(2) {
+      transform: rotate(3deg) translate(10px, -20px);
+    }
+
+    .food-card:hover {
+      transform: scale(1.05) rotate(0deg);
+      z-index: 10;
+    }
+
+    .food-card img {
+      width: 100%;
+      height: 90%;
+      object-fit: cover;
+      filter: saturate(1.2);
+    }
+
+    .food-card span {
+      display: block;
+      text-align: center;
+      color: #eee8e8;
+      font-family: 'Prompt', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .card-footer {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .landmark-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 10s linear;
+    }
+
+    .content-card:hover .landmark-bg {
+      transform: scale(1.1);
+    }
+
+    .landmark-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+      padding: 20px 2.5rem;
+      color: #fff;
+    }
+
+    .landmark-title {
+      color: #ffdb58;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .landmark-text {
+      font-size: 0.9rem;
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    /* ---------- PAGE 2 : STATS & CHART ---------- */
+    .page-wrapper {
+      width: 100%;
+      max-width: none;
+      padding: 40px 0px 60px;
+      position: relative;
+      z-index: 30;
+      background: radial-gradient(circle at top, #422818 0, #181009 55%);
+
+    }
+
+    .page-card {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      max-width: 1200px;
+      box-shadow: none;
+      margin: 0 auto;
+    }
+
+    /* REVEAL ANIMATION */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- HEADER PAGE 2 ---------- */
+    .page-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.6;
+    }
+
+    .page-header h1 span.highlight {
+      color: #ebd55a;
+      font-weight: 700;
+    }
+
+    .page-header .subtitle {
+      margin-top: 2px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .header-underline {
+      width: 210px;
+      height: 4px;
+      margin: 10px auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), #00c1ff);
+    }
+
+    /* ---------- TOP 2 IMAGES ---------- */
+    .top-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 40px auto 36px;
+      max-width: 640px;
+    }
+
+    .top-images img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.6s ease, box-shadow 0.6s ease, filter 0.6s ease;
+      cursor: pointer;
+    }
+
+    .top-images img:hover {
+      transform: translateY(-6px) scale(1.03);
+      filter: brightness(1.05);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    /* ---------- INTRO TEXT BLOCK ---------- */
+    .intro-block {
+      max-width: none;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .intro-block h2 {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: rgb(206, 204, 182);
+    }
+
+    .intro-block p {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--text-main);
+    }
+
+    /* ---------- DISH SECTIONS ---------- */
+    .dish-section {
+      max-width: none;
+      margin: 0 auto 36px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 26px;
+      align-items: center;
+      padding: 16px 10px;
+      border-radius: 18px;
+      transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .dish-section.reverse {
+      grid-template-columns: 1fr 220px;
+    }
+
+    .dish-section:hover {
+      background: radial-gradient(circle at top left, rgba(207, 161, 102, 0.22), transparent 55%);
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .dish-image-wrap {
+      text-align: center;
+    }
+
+    .dish-image {
+      width: 250px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 14px;
+      transition: transform 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .dish-section:hover .dish-image {
+      transform: scale(1.05);
+      filter: brightness(1.05);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .dish-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--accent);
+    }
+
+    .dish-subtitle {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--gold);
+    }
+
+    .dish-text {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: #cfa166;
+    }
+
+    /* ---------- STATS : WORLD MAP + TEXT ---------- */
+    .stats-section {
+      max-width: none;
+      margin: 40px auto 36px;
+    }
+
+    .stats-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--gold);
+    }
+
+    .stats-subtitle {
+      font-size: 0.95rem;
+      color: var(--gold);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .stats-map {
+      width: 95%;
+      height: 350px;
+      border-radius: 16px;
+      background: #fff;
+      object-fit: cover;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+      cursor: zoom-in;
+    }
+
+    .stats-map:hover {
+      transform: scale(1.02);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    /* ---------- BAR CHART BLOCK ---------- */
+    .chart-section {
+      max-width: none;
+      margin: 32px auto 0;
+      text-align: center;
+    }
+
+    .chart-title-main {
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: white;
+      font-size: 1.3rem;
+    }
+
+    .chart-title-sub {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: white;
+    }
+
+    .chart-canvas {
+      margin-top: 6px;
+      padding: 10px 30px 0;
+    }
+
+    .chart-inner {
+      position: relative;
+      background: var(--bg-card);
+      height: 320px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .plot-area {
+      position: absolute;
+      left: 60px;
+      right: 10px;
+      bottom: 20px;
+      top: 40px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 18px 0 10px;
+      border-left: 2px solid #a99b90;
+      border-bottom: 2px solid #a99b90;
+      background-image: repeating-linear-gradient(to top,
+          #d9cec2 0px,
+          #d9cec2 1px,
+          transparent 1px,
+          transparent 44px);
+    }
+
+    .y-labels {
+      position: absolute;
+      left: 28px;
+      bottom: 40px;
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    .y-labels span:first-child {
+      transform: translateY(-6px);
+    }
+
+    .bar-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .bar-flag img {
+      width: 60px;
+      height: auto;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
+    }
+
+    .bar-shell {
+      height: 210px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .bar {
+      width: 70px;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+      background: linear-gradient(to top, #f1912c, #ffd851);
+      height: 0;
+      /* เริ่มจาก 0 แล้วค่อยดันขึ้นด้วย JS */
+      transition: height 0.8s ease-out, transform 0.2s ease;
+    }
+
+    .bar-group:hover .bar {
+      transform: translateY(-6px);
+    }
+
+    .bar-label {
+      margin-top: 4px;
+      font-size: 0.78rem;
+      color: var(--text-main);
+      max-width: 120px;
+      line-height: 1.3;
+    }
+
+    .chart-caption {
+      font-size: 0.9rem;
+      color: white;
+      margin-top: 14px;
+      line-height: 1.7;
+    }
+
+    /* tooltip สำหรับ bar / donut */
+    .bar-tooltip {
+      position: fixed;
+      padding: 6px 10px;
+      background: rgba(24, 16, 9, 0.9);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      z-index: 999;
+      white-space: nowrap;
+    }
+
+    .bar-tooltip.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- EXPORT SHARE + DONUTS ---------- */
+    .export-section {
+      max-width: none;
+      margin: 60px auto 0;
+      text-align: center;
+    }
+
+    .export-text {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .export-hero {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto 50px;
+    }
+
+    .export-hero img {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      cursor: pointer;
+    }
+
+    .export-hero img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.75);
+    }
+
+    .donut-section-title {
+      font-weight: 700;
+      margin-bottom: 26px;
+      color: white;
+    }
+
+    .donut-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .donut-card {
+      width: 160px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 8px 4px 14px;
+      border-radius: 16px;
+      background: rgba(30, 25, 20, 0.4);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+
+    .donut-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.75);
+    }
+
+    .donut-title {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .donut {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  border-radius: 50%;
+  position: relative;
+  background: conic-gradient(#ffd851 0 86.7%, #f1912c 86.7% 100%);
+}
+
+/* เวลาเอาเมาส์ไปวาง ให้หมุนไป-กลับ แล้วกลับมาท่าปกติทุกครั้ง */
+.donut-card:hover .donut {
+  animation: spinDonut 1.2s ease-out;
+}
+
+@keyframes spinDonut {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(270deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+    .donut::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border-radius: 50%;
+      background: var(--bg-card);
+    }
+
+    .donut-center {
+      position: absolute;
+      inset: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #6a4c2b;
+      z-index: 1;
+    }
+
+    .donut-card:hover .donut {
+      transform: scale(1.05);
+    }
+
+    .donut-cn {
+      background: conic-gradient(#ccd58b 0 97.8%, #7b9e3c 97.8% 100%);
+    }
+
+    .donut-frozen {
+      background: conic-gradient(#f1959b 0 84.4%, #a63b48 84.4% 100%);
+    }
+
+    .donut-other {
+      background: conic-gradient(#c47a2c 0 68.9%, #8e4a18 68.9% 100%);
+    }
+
+    .donut-percent {
+      margin-top: 6px;
+      font-size: 0.78rem;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 12px;
+      color: white;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .golden-line {
+        display: none;
+      }
+
+      .card,
+      .card:nth-child(even),
+      .card:nth-child(odd) {
+        flex-direction: column;
+        margin: 60px 20px;
+        text-align: center;
+      }
+
+      .location-tag {
+        justify-content: center;
+      }
+
+      .content-card {
+        width: 90vw;
+      }
+
+      .card-body {
+        grid-template-columns: 1fr;
+      }
+
+      .page-card {
+        padding: 28px 18px 40px;
+        border-radius: 0;
+      }
+
+      .top-images {
+        grid-template-columns: 1fr;
+      }
+
+      .dish-section,
+      .dish-section.reverse {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+
+      .dish-image {
+        margin: 0 auto;
+      }
+
+      .stats-section,
+      .chart-section,
+      .export-section {
+        margin: 28px auto 24px;
+      }
+
+      .plot-area {
+        left: 50px;
+        padding: 0 10px;
+      }
+
+      .bar-label {
+        font-size: 0.7rem;
+      }
+
+      .donut-card {
+        width: 45%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PARALLAX BACKGROUND -->
+  <div class="parallax-container">
+    <div class="ingredient" data-speed="0.2"
+      style="top: 10%; right: 10%; width: 100px; height: 100px; background: #d35400; border-radius: 50%; filter: blur(40px);">
+    </div>
+    <div class="ingredient" data-speed="0.5"
+      style="top: 40%; left: 5%; width: 80px; height: 80px; background: #27ae60; border-radius: 50%; filter: blur(30px);">
+    </div>
+    <div class="ingredient" data-speed="0.1"
+      style="bottom: 20%; right: 20%; width: 150px; height: 150px; background: #c0392b; border-radius: 50%; filter: blur(50px);">
+    </div>
+  </div>
+
+  <div class="texture-overlay"></div>
+
+  <!-- ========== PART 1 : TIMELINE HERO ========== -->
+  <header class="hero-header">
+    <div class="header-content">
+      <i data-lucide="utensils-crossed"
+        style="color: var(--gold-color); width: 64px; height: 64px; margin-bottom: 1rem;"></i>
+      <h1 class="main-title">อาหารไทย...จากครัวบ้านสู่</h1>
+      <h1 class="main-title">ครัวโลก</h1>
+      <p class="subtitle-hero">วิวัฒนาการอาหารไทยจากอดีตสู่สากล</p>
+    </div>
+    <div class="scroll-indicator">
+      <span>เลื่อนเพื่อชมประวัติศาสตร์</span>
+      <div class="scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- TIMELINE -->
+  <div class="timeline-container">
+    <div class="golden-line"></div>
+
+    <!-- CARD 1 -->
+    <div class="card">
+      <div class="card-image-wrapper">
+        <img src="assets/images/TimeFish.png" alt="Pla Pao" class="card-image">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">ปลาเผาโบราณ</h2>
+        <div class="year-text">พ.ศ. 1800</div>
+        <div class="location-tag">
+          <i data-lucide="flame" style="width: 16px;"></i> ยุคก่อนประวัติศาสตร์ไทย
+        </div>
+        <p class="card-desc">
+          ลักษณะอาหารช่วงนี้ ใช้สมุนไพรพื้นบ้าน: ข่า ตะไคร้ ใบมะกรูด
+          เริ่มรู้จักการถนอมอาหาร: หมักเกลือ, ตากแห้ง
+          มีร่องรอย “ต้นแบบน้ำปลา/ปลาร้า” จากการหมักปลา
+          เทคนิคสำคัญ: ต้ม ย่าง อบ (ยังไม่มีการผัด)
+          เมนูต้นแบบ: ปลาอบ, ต้มสมุนไพร, อาหารหมัก
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="card">
+      <div class="card-image-wrapper">
+        <img src="assets/images/t12.png" alt="Kaeng Liang" class="card-image">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">แกงมัสมั่น</h2>
+        <div class="year-text">พ.ศ. 1893–2310</div>
+        <div class="location-tag">
+          <i data-lucide="landmark" style="width: 16px;"></i>ยุคอยุธยา
+        </div>
+        <p class="card-desc">
+          ยุคที่อาหารไทยเริ่มผสมผสานวัฒนธรรมต่างชาติจากการค้าโลก
+          โปรตุเกสนำพริก มะเขือเทศ ฟักทอง เข้ามา
+          จีนถ่ายทอดการผัดด้วยไฟแรงและซอสถั่วเหลือง
+          เครื่องเทศจากอินเดีย–เปอร์เซีย เช่น อบเชย ลูกกระวาน
+          เกิดขนมทองหยิบ–ทองหยอด และแกงเผ็ดไทยที่เริ่มเข้มข้นขึ้น
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="card">
+      <div class="card-image-wrapper">
+        <img src="assets/images/t13.png" alt="Massaman" class="card-image">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">แกงเลียง</h2>
+        <div class="year-text">พ.ศ. 2310–2325</div>
+        <div class="location-tag">
+          <i data-lucide="ship" style="width: 16px;"></i>ยุคธนบุรี
+        </div>
+        <p class="card-desc">
+          ยุคที่อาหารไทยมีพื้นฐานจากทรัพยากรท้องถิ่น เน้นสมุนไพรและการถนอมอาหาร
+          ใช้สมุนไพรเพื่อกลิ่นและยา ไม่มีพริกแดงจากต่างชาติ
+          วิธีทำอาหาร: ต้ม, ย่าง, ปิ้ง, หมัก, ทำปลาร้า
+          วัตถุดิบสำคัญ: พริกไทยป่า, ข่า, ตะไคร้, ปลาแม่น้ำ
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="card">
+      <div class="card-image-wrapper">
+        <img src="assets/images/t09.png" alt="Khao Chae" class="card-image">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">ผัดผักบุ้งไฟแดง</h2>
+        <div class="year-text">พ.ศ.2325–2394 </div>
+        <div class="location-tag">
+          <i data-lucide="crown" style="width: 16px;"></i> ยุครัตนโกสินทร์ตอนต้น
+        </div>
+        <p class="card-desc">
+          ยุคที่ตำรับไทยเริ่มถูกบันทึก และซอสถั่วเหลือง-ก๋วยเตี๋ยวจากจีนเริ่มแพร่หลาย
+          การใช้กะทิแพร่หลาย
+          ผัดด้วยไฟแรงแบบจีนกลายเป็นส่วนหนึ่งของอาหารไทย
+          ตัวอย่างเมนู: ต้มยำ, แกงกะทิ, ผัดผักบุ้งไฟแดง, ก๋วยเตี๋ยวน้ำใสแบบจีน
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="card">
+      <div class="card-image-wrapper">
+        <img src="assets/images/t11.png" alt="Thai Roast Beef" class="card-image">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">แกงเขียวหวาน</h2>
+        <div class="year-text">พ.ศ.2325–2394 </div>
+        <div class="location-tag">
+          <i data-lucide="globe-2" style="width: 16px;"></i>ยุครัตนโกสินทร์ตอนกลาง–ปลาย
+        </div>
+        <p class="card-desc">
+          ยุคที่สยามรับอิทธิพลตะวันตกและเริ่มมี “อาหารชาววัง” ที่ประณีต
+          เริ่มใช้นม เนย ขนมปัง
+          ครัวหลวงทำให้วิธีทำอาหารละเอียดขึ้น
+          ผสมเทคนิคไทย–จีน–ตะวันตก → หมี่กรอบชาววัง, แกงเขียวหวาน, ไข่ลูกเขย
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 6 -->
+    <div class="card">
+      <div class="card-image-wrapper">
+        <img src="assets/images/t07.png" alt="padthai" class="card-image">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">ผัดไทย</h2>
+        <div class="year-text">พ.ศ. 2482–2490</div>
+        <div class="location-tag">
+          <i data-lucide="chef-hat" style="width: 16px;"></i>ยุครัฐนิยม จอมพล ป.พิบูลสงคราม
+        </div>
+        <p class="card-desc">
+          ยุคที่อาหารไทยถูกใช้สร้าง “อัตลักษณ์ชาติ” → กำเนิดผัดไทย
+          รัฐรณรงค์ให้กินก๋วยเตี๋ยวเพื่อลดการใช้ข้าว
+          สร้างเมนู “ก๋วยเตี๋ยวผัดแบบไทย” → กลายเป็น ผัดไทย
+          เป็นหนึ่งในเมนูที่คนต่างชาติรู้จักมากที่สุด
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 7 -->
+    <div class="card">
+      <div class="card-image-wrapper">
+        <span class="flag-badge">🇹🇭</span>
+        <img src="assets/images/t08.png" alt="Tom Yum Goong" class="card-image">
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">ซุปต้มยำกุ้ง</h2>
+        <div class="year-text">พ.ศ. 2520 – ปัจจุบัน</div>
+        <div class="location-tag">
+          <i data-lucide="rocket" style="width: 16px;"></i> อาหารไทยสมัยใหม่สู่เวทีโลก
+        </div>
+        <p class="card-desc">
+          ยุค Globalization ที่ทำให้อาหารไทยโด่งดังระดับโลก
+          “ครัวไทยสู่ครัวโลก” ดันร้านอาหารไทยทั่วโลก
+          มัสมั่น–ต้มยำ–แกงเขียวหวาน ติดอันดับเมนูอร่อยของโลก
+          และเกิดเมนูฟิวชัน เช่น ต้มยำพาสต้า, แกงเขียวหวานพิซซ่า
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========== PART 2 : MAP JOURNEY ========== -->
+
+  <div class="map-fixed-container">
+    <div class="map-inner" id="map-click-target">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/2000px-World_map_-_low_resolution.svg.png"
+        alt="World Map" class="world-map-bg">
+      <svg class="map-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
+        <path id="path-jp" class="route-path" d="M772,282 Q820,200 868,201" />
+        <path id="path-cn" class="route-path" d="M772,282 Q785,220 797,186" />
+        <path id="path-au" class="route-path" d="M772,282 Q840,380 907,426" />
+        <path id="path-fr" class="route-path" d="M772,282 Q620,150 482,180" />
+        <path id="path-us" class="route-path" d="M772,282 Q500,50 269,198" />
+      </svg>
+      <div class="marker loc-th"></div>
+      <div class="flag-icon loc-jp" id="flag-jp" data-flag="🇯🇵">🇯🇵</div>
+      <div class="flag-icon loc-cn" id="flag-cn" data-flag="🇨🇳">🇨🇳</div>
+      <div class="flag-icon loc-au" id="flag-au" data-flag="🇦🇺">🇦🇺</div>
+      <div class="flag-icon loc-fr" id="flag-fr" data-flag="🇫🇷">🇫🇷</div>
+      <div class="flag-icon loc-us" id="flag-us" data-flag="🇺🇸">🇺🇸</div>
+    </div>
+  </div>
+
+  <div class="map-texture-overlay"></div>
+  <div class="map-vignette-overlay"></div>
+
+  <!-- SCROLL SECTIONS FOR MAP JOURNEY -->
+  <div class="scroll-container">
+    <section class="section" id="sec-intro">
+      <div>
+        <h1
+          style="font-size: clamp(3rem, 8vw, 6rem); color: #ffdb58; line-height: 1; text-shadow: 0 0 20px rgba(238, 187, 77, 0.5);">
+          THAI TASTE<br>ODYSSEY</h1>
+        <div style="width: 100px; height: 2px; background: #ffdb58; margin: 20px auto;"></div>
+        <p style="font-size: 1.5rem; font-weight: 300;">การเดินทางของรสชาติไทยสู่สากล</p>
+        <p style="margin-top: 30px; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.6;">SCROLL TO BEGIN JOURNEY</p>
+      </div>
+    </section>
+
+    <section class="section" id="sec-jp">
+      <div class="content-card">
+        <div class="card-header">
+          <div class="header-text">
+            <div class="sub-title">Japan</div>
+            <h2 class="thai-header">รสไทยในแดนอูมามิ</h2>
+          </div>
+          <div class="flag-badge-map">
+            <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg" alt="Japan">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="story-content">
+            <p class="quote">“ญี่ปุ่น...หนึ่งในประเทศที่หลงใหลอาหารไทยมากที่สุดในเอเชีย”</p>
+            <p class="desc">อาหารไทยกลายเป็นรสชาติที่คนญี่ปุ่นหลงใหล
+              ร้านอาหารไทยมากกว่า 1,000 แห่ง กระจายอยู่ทั่วโตเกียวและเมืองใหญ่
+              คนญี่ปุ่นเริ่มทำ “ผัดไทย” และเมนูไทยกินเองที่บ้านมากขึ้นทุกปี</p>
+          </div>
+          <div class="food-gallery">
+            <div class="food-card">
+              <img src="assets/images/รูปต้มยำกุ้ง สไตล์ญี่ปุ่น .png" alt="Tom Yum">
+              <span>ต้มยำกุ้ง</span>
+            </div>
+            <div class="food-card">
+              <img src="assets/images/รูปข้าวผัด สไตล์ญี่ปุ่น .png" alt="Pad Thai">
+              <span>ผัดไทย</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <img src="assets/images/travjapan.png" alt="Tokyo" class="landmark-bg">
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-cn">
+      <div class="content-card">
+        <div class="card-header">
+          <div class="header-text">
+            <div class="sub-title">China</div>
+            <h2 class="thai-header">รสชาติไทยในตลาดที่โตเร็วที่สุด</h2>
+          </div>
+          <div class="flag-badge-map">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg"
+              alt="China">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="story-content">
+            <p class="quote">“จีน...ตลาดยักษ์ใหญ่ที่เริ่มหลงรักรสเผ็ดแบบไทยๆ”</p>
+            <p class="desc">
+              จากเมนูแปลกใหม่ในร้านหรู ปัจจุบันอาหารไทยกลายเป็นที่นิยมในคนรุ่นใหม่ของจีน
+              โดยเฉพาะ “ต้มยำกุ้ง” และ “ข้าวเหนียวมะม่วง” ที่ครองใจคนเมืองในปักกิ่งและเซี่ยงไฮ้
+            </p>
+          </div>
+          <div class="food-gallery">
+            <div class="food-card">
+              <img src="assets/images/รูปต้มยำกุ้ง สไตล์จีน .png" alt="Tom Yum China">
+              <span>ต้มยำหม้อไฟ</span>
+            </div>
+            <div class="food-card">
+              <img src="assets/images/รูปข้าวเหนี่ยวมะม่วง สไตล์จีน .png" alt="Mango sticky rice">
+              <span>ข้าวเหนียวมะม่วง</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <img src="assets/images/TravChina.png" alt="China" class="landmark-bg">
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-au">
+      <div class="content-card">
+        <div class="card-header">
+          <div class="header-text">
+            <div class="sub-title">Australia</div>
+            <h2 class="thai-header">รสไทยในบ้านของชาวออสซี่</h2>
+          </div>
+          <div class="flag-badge-map">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Australia.svg" alt="Australia">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="story-content">
+            <p class="quote">“ออสเตรเลีย...ประเทศที่คนทำอาหารไทยกินเองมากที่สุดในโลก”</p>
+            <p class="desc">
+              ร้านอาหารไทยและเครื่องแกงไทยอยู่ในซูเปอร์มาร์เก็ตทั่วประเทศ
+              หลายครอบครัวทำแกงเขียวหวานหรือส้มตำกินเองที่บ้าน
+              ทำให้รสชาติไทยกลายเป็นส่วนหนึ่งของชีวิตประจำวันชาวออสซี่
+            </p>
+          </div>
+          <div class="food-gallery">
+            <div class="food-card">
+              <img src="assets/images/รูปต้มยำกุ้ง ออสเตรเลีย.png" alt="Tom Yum Aus">
+              <span>ต้มยำกุ้ง</span>
+            </div>
+            <div class="food-card">
+              <img src="assets/images/รูปแกงเขียวหวาน ออสเตรเลีย.png" alt="Green curry">
+              <span>แกงเขียวหวาน</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <img src="assets/images/TravAus.png" alt="Sydney" class="landmark-bg">
+        </div>
+      </div>
+    </section>
+
+    <section class="section-end" id="sec-fr">
+      <div class="content-card">
+        <div class="card-header">
+          <div class="header-text">
+            <div class="sub-title">France</div>
+            <h2 class="thai-header">รสอาหารไทยในเมืองศิลปะ</h2>
+          </div>
+          <div class="flag-badge-map">
+            <img src="https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg" alt="France">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="story-content">
+            <p class="quote">“ฝรั่งเศสสรรค์สร้างอาหารไทย กลายเป็นงานศิลป์บนจาน”</p>
+            <p class="desc">
+              ในฝรั่งเศส อาหารไทยถูกยกระดับจากจานพื้นบ้านสู่เวที fine dining
+              เมนูแกงมัสมั่นและต้มข่าไก่ปรากฏในร้านดาว Michelin
+              เชฟฝรั่งเศสมองว่าอาหารไทยคือการผสมผสานสมุนไพรและเครื่องเทศที่ประณีต
+            </p>
+          </div>
+          <div class="food-gallery">
+            <div class="food-card">
+              <img src="assets/images/รูปมัสมั่นไก่ สไตล์ ฝรั่งเศส.png" alt="Massaman">
+              <span>มัสมั่นไก่</span>
+            </div>
+            <div class="food-card">
+              <img src="assets/images/รูปต้มข่าไก่ สไตล์ ฝรั่งเศส .png" alt="Tom Kha">
+              <span>ต้มข่าไก่</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <img src="assets/images/TravFran.png" alt="Paris" class="landmark-bg">
+        </div>
+    </section>
+
+    <section class="section-end" id="sec-us">
+      <div class="content-card">
+        <div class="card-header">
+          <div class="header-text">
+            <div class="sub-title">USA</div>
+            <h2 class="thai-header">รสครัวไทยสู่ครัวโลก</h2>
+          </div>
+          <div class="flag-badge-map">
+            <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="USA">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="story-content">
+            <p class="quote">“อเมริกา...บ้านหลังใหญ่ของอาหารไทยในโลกตะวันตก”</p>
+            <p class="desc">
+              จากร้านเล็ก ๆ ของผู้อพยพไทย ปัจจุบันมีร้านอาหารไทยกว่า 7,000 ร้านทั่วสหรัฐ
+              ผัดไทยและต้มยำกลายเป็นเมนู “ประจำ” ของหลายเมือง
+              เป็น Soft Power ที่ทำให้คนจำชื่อประเทศไทยผ่านรสชาติ
+            </p>
+          </div>
+          <div class="food-gallery">
+            <div class="food-card">
+              <img src="assets/images/รูปผัดไทย สไตล์ อเมริกา.png" alt="Pad Thai USA">
+              <span>ผัดไทย (Pad Thai)</span>
+            </div>
+            <div class="food-card">
+              <img src="assets/images/รูปผัดซีอิ๊ว สไตล์ อเมริกา .png" alt="Pad see ew">
+              <span>ผัดซีอิ๊ว</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <img src="assets/images/TravUSA.png" alt="NYC" class="landmark-bg">
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-outro">
+      <div>
+        <h2 style="font-size: 3rem; color: #ffdb58;">The Journey Continues</h2>
+        <div style="width: 50px; height: 2px; background: #fff; margin: 20px auto; opacity: 0.5;"></div>
+        <p class="thai-header" style="font-size: 1.25rem;">
+          อาหารไทย...เดินทางไปไกลทั่วโลก<br>แต่หัวใจยังคงอยู่ที่เดิม</p>
+      </div>
+    </section>
+
+    <div style="height: 10vh;"></div>
+  </div>
+
+  <!-- ========== PART 3 : PAGE 2 – STATS & CHARTS ========== -->
+
+  <div class="page-wrapper">
+    <div class="page-card">
+
+      <!-- HEADER -->
+      <header class="page-header reveal">
+        <h1>
+          “จากร้าน<span class="highlight">ริมทาง</span> ในกรุงเทพฯ สู่จาน
+          <span class="highlight">“หรู”</span> ในลอนดอนและนิวยอร์ก”
+        </h1>
+        <h1 class="subtitle">อาหารไทยเดินทางไกล... กว่าที่เราคิด</h1>
+        <div class="header-underline"></div>
+      </header>
+
+      <!-- TOP IMAGES -->
+      <div class="top-images reveal">
+        <img src="assets/images/b_00.png" alt="ครัวไทย" />
+        <img src="assets/images/จานอาหารไทยคู่ครัว.png" alt="จานอาหารไทย" />
+      </div>
+
+      <!-- INTRO TEXT -->
+      <section class="intro-block reveal">
+        <h2>อาหาร คือภาษาสากลที่ไม่ต้องแปล... และ “อาหารไทย” ก็พูดได้ชัดเจนในทุกมุมโลก</h2>
+      </section>
+
+      <!-- DISH 1 -->
+      <section class="dish-section reveal">
+        <div class="dish-image-wrap">
+          <img class="dish-image" src="assets/images/รูปข้าวผัด สไตล์ญี่ปุ่น .png" alt="อาหารไทยรวม" />
+        </div>
+        <div>
+          <div class="dish-title">อาหารไทย: รสชาติที่คนทั่วโลกเริ่มคุ้นเคย</div>
+          <div class="dish-subtitle">จากเมนู “แปลกใหม่” สู่เมนู “อยากกินอีก”</div>
+          <p class="dish-text">
+            อาหารไทย เป็นระบบวัฒนธรรมที่พัฒนาอย่างต่อเนื่องมานานหลายศตวรรษ
+            แต่ละรสชาติ—หวาน เค็ม เปรี้ยว เผ็ด—เกิดจากการผสมผสานวัตถุดิบท้องถิ่น เทคนิคดั้งเดิม
+            และอิทธิพลจากเพื่อนบ้าน เช่น จีน อินเดีย และมลายู
+          </p>
+        </div>
+      </section>
+
+      <!-- DISH 2 -->
+      <section class="dish-section reverse reveal">
+        <div>
+          <div class="dish-title">ผัดไทย</div>
+          <div class="dish-subtitle">จากเมนูริมทางสู่เมนูซิกเนเจอร์ในร้านอาหารไทยทั่วโลก</div>
+          <p class="dish-text">
+            กำเนิดในยุคสงครามโลกครั้งที่ 2 จากนโยบายชาตินิยมด้านอาหาร
+            ผัดไทยสะท้อนเอกลักษณ์รสชาติไทยครบในจานเดียว
+          </p>
+        </div>
+        <div class="dish-image-wrap">
+          <img class="dish-image" src="assets/images/ผัดไทย.1.png" alt="ผัดไทย" />
+        </div>
+      </section>
+
+      <!-- DISH 3 -->
+      <section class="dish-section reveal">
+        <div class="dish-image-wrap">
+          <img class="dish-image" src="assets/images/รูปต้มยำกุ้ง .png" alt="ต้มยำกุ้ง" />
+        </div>
+        <div>
+          <div class="dish-title">ต้มยำกุ้ง</div>
+          <div class="dish-subtitle">ซุปที่กลายเป็นสัญลักษณ์รสจัดจ้านแบบไทย ๆ</div>
+          <p class="dish-text">
+            ต้มยำกุ้งรวมสมุนไพรไทย เข้ากับเทคนิคการต้มแบบต่างชาติ
+            เป็น Soft Power ที่คนทั่วโลกรู้จักในคำแรกที่ได้ชิม
+          </p>
+        </div>
+      </section>
+
+      <!-- STATS : WORLD MAP -->
+      <section class="stats-section reveal">
+        <h3 class="stats-title">“ร้านอาหารไทยในต่างประเทศ”</h3>
+        <p class="stats-subtitle">
+          มีมากกว่า 18,852 ร้านทั่วโลก โครงการ Thai Select ให้ตรารับรองร้านที่คงรสชาติแบบไทยแท้
+          ปัจจุบันมีมากกว่า 1,779 ร้านใน 63 ประเทศ
+        </p>
+
+        <img src="assets/images/แผนที่1.png" alt="แผนที่ร้านอาหารไทยทั่วโลก" class="stats-map">
+
+        <p class="stats-subtitle" style="margin-top: 20px;">
+          จากรสชาติในครัวบ้าน สู่เศรษฐกิจมูลค่ากว่า 1.3 ล้านล้านบาท
+          ปี 2566 มูลค่าการส่งออกอาหารไทยทะลุ 1.36 ล้านล้านบาท
+        </p>
+      </section>
+
+      <!-- BAR CHART TOP 5 -->
+      <section class="chart-section reveal">
+        <div class="chart-title-main">ประเทศนำเข้าหลัก (Top 5)</div>
+        <div class="chart-title-sub">สัดส่วน%การนำเข้า (Top 5)</div>
+
+        <div class="chart-canvas">
+          <div class="chart-inner" id="chart-inner">
+            <div class="y-labels">
+              <span>20</span>
+              <span>15</span>
+              <span>10</span>
+              <span>5</span>
+              <span>0</span>
+            </div>
+
+            <div class="plot-area">
+
+              <div class="bar-group" data-tooltip="USA • สัดส่วน ~20% ของตลาดนำเข้าอาหารไทย">
+                <div class="bar-flag">
+                  <img src="assets/images/USA.png" alt="USA">
+                </div>
+                <div class="bar-shell">
+                  <div class="bar bar-us" data-height="210"></div>
+                </div>
+                <div class="bar-label">ผัดไทย, ต้มยำ</div>
+              </div>
+
+              <div class="bar-group" data-tooltip="China • เน้นซอสและเครื่องปรุงรสไทย">
+                <div class="bar-flag">
+                  <img src="assets/images/china.png" alt="China">
+                </div>
+                <div class="bar-shell">
+                  <div class="bar bar-cn" data-height="170"></div>
+                </div>
+                <div class="bar-label">ซอส เครื่องปรุงรส</div>
+              </div>
+
+              <div class="bar-group" data-tooltip="Japan • โตแรงในกลุ่มอาหารพร้อมทาน">
+                <div class="bar-flag">
+                  <img src="assets/images/Japan.png" alt="Japan">
+                </div>
+                <div class="bar-shell">
+                  <div class="bar bar-jp" data-height="155"></div>
+                </div>
+                <div class="bar-label">อาหารพร้อมทาน</div>
+              </div>
+
+              <div class="bar-group" data-tooltip="Australia • นิยมข้าวหอมมะลิและน้ำพริก">
+                <div class="bar-flag">
+                  <img src="assets/images/Aus.png" alt="Australia">
+                </div>
+                <div class="bar-shell">
+                  <div class="bar bar-au" data-height="130"></div>
+                </div>
+                <div class="bar-label">น้ำพริก, ข้าวหอมมะลิ</div>
+              </div>
+
+              <div class="bar-group" data-tooltip="France • โดดเด่นในเมนูแกงไทยและซอสพริก">
+                <div class="bar-flag">
+                  <img src="assets/images/Fran.png" alt="France">
+                </div>
+                <div class="bar-shell">
+                  <div class="bar bar-fr" data-height="115"></div>
+                </div>
+                <div class="bar-label">แกงไทย, ซอสพริก</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <p class="chart-caption">
+          สหรัฐอเมริกา จีน ญี่ปุ่น ออสเตรเลีย และฝรั่งเศส
+          เป็นตลาดหลักที่มีความต้องการสินค้าอาหารไทยสูงอย่างต่อเนื่อง
+        </p>
+      </section>
+
+      <!-- EXPORT SHARE + DONUTS -->
+      <section class="export-section reveal">
+        <p class="export-text">
+          ประเทศไทยเป็นหนึ่งในผู้ส่งออกอาหารรายใหญ่ของเอเชีย โดยเฉพาะข้าวหอมมะลิ
+          ครองตลาดส่งออกอันดับ 1 ของโลก
+          ขณะที่น้ำปลาและพริกแกงไทยมีตลาดในกว่า 60 ประเทศ
+          อาหารแช่แข็งและอาหารพร้อมทานเติบโตเฉลี่ยราว 12% ต่อปี
+        </p>
+
+        <div class="export-hero">
+          <img src="assets/images/เครื่องปรุง.png" alt="สินค้าอาหารส่งออกไทย">
+        </div>
+
+        <h3 class="donut-section-title">สัดส่วนสินค้าส่งออก</h3>
+
+        <div class="donut-grid">
+
+          <div class="donut-card" data-tooltip="ข้าวไทยยังเป็นพระเอกของการส่งออก">
+            <div class="donut-title">ข้าว</div>
+            <div class="donut donut-rice">
+              <div class="donut-center">86.7%</div>
+            </div>
+            <div class="donut-percent">
+              <span>ส่งออก</span>
+              <span>ตลาดอื่น</span>
+            </div>
+          </div>
+
+          <div class="donut-card" data-tooltip="เครื่องปรุงรสไทยกระจายตัวไปกว่า 60 ประเทศ">
+            <div class="donut-title">เครื่องปรุงรส</div>
+            <div class="donut donut-cn">
+              <div class="donut-center">97.8%</div>
+            </div>
+            <div class="donut-percent">
+              <span>ส่งออก</span>
+              <span>ตลาดอื่น</span>
+            </div>
+          </div>
+
+          <div class="donut-card" data-tooltip="อาหารแช่แข็งโตแรงตามไลฟ์สไตล์เร่งรีบ">
+            <div class="donut-title">อาหารแช่แข็ง</div>
+            <div class="donut donut-frozen">
+              <div class="donut-center">84.4%</div>
+            </div>
+            <div class="donut-percent">
+              <span>ส่งออก</span>
+              <span>ตลาดอื่น</span>
+            </div>
+          </div>
+
+          <div class="donut-card" data-tooltip="หมวดอื่น ๆ รวม เช่น snack, เครื่องดื่ม ฯลฯ">
+            <div class="donut-title">กลุ่มอาหารอื่น ๆ รวม</div>
+            <div class="donut donut-other">
+              <div class="donut-center">68.9%</div>
+            </div>
+            <div class="donut-percent">
+              <span>ส่งออก</span>
+              <span>ตลาดอื่น</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- tooltip สำหรับ bar / donut -->
+  <div class="bar-tooltip" id="tooltip"></div>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Timeline & Parallax -->
+  <script>
+    lucide.createIcons();
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero header fade-in
+    gsap.to(".header-content", {
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      ease: "power3.out",
+      delay: 0.2
+    });
+
+    // Golden timeline line
+    gsap.to(".golden-line", {
+      scaleY: 1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".timeline-container",
+        start: "top center",
+        end: "bottom center",
+        scrub: true
+      }
+    });
+
+    // Cards fade up
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card) => {
+      gsap.to(card, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: card,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+    });
+
+    // Parallax blobs
+    const ingredients = document.querySelectorAll('.ingredient');
+    ingredients.forEach((item) => {
+      const speed = item.getAttribute('data-speed');
+      gsap.to(item, {
+        y: -300 * speed,
+        rotation: 360,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "body",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1
+        }
+      });
+    });
+  </script>
+
+  <!-- Map Journey Script -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const locations = {
+      intro: { scale: 1.5, x: 55, y: 45 },
+      jp: { scale: 2.2, x: 70.1, y: 33.5 },
+      cn: { scale: 2.2, x: 65.7, y: 31.0 },
+      au: { scale: 2.2, x: 75.7, y: 71.0 },
+      fr: { scale: 2.2, x: 60.2, y: 30.0 },
+      us: { scale: 2.2, x: 35.9, y: 33.0 },
+      overview: { scale: 1.5, x: 55, y: 45 },
+    };
+
+    function calculateTransform(loc) {
+      return {
+        scale: loc.scale,
+        xPercent: (50 - loc.x) * loc.scale,
+        yPercent: (50 - loc.y) * loc.scale
+      };
+    }
+
+    const initialPos = calculateTransform(locations.intro);
+    gsap.set(".map-inner", {
+      scale: initialPos.scale,
+      xPercent: initialPos.xPercent,
+      yPercent: initialPos.yPercent
+    });
+
+    document.querySelectorAll('.route-path').forEach(path => {
+      const len = path.getTotalLength();
+      gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+    });
+
+    function createScene(targetId, locKey, pathId, flagId) {
+      const targetPos = calculateTransform(locations[locKey]);
+
+      let tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: targetId,
+          start: "top bottom",
+          end: "center center",
+          scrub: 1,
+        }
+      });
+
+      tl.to(".map-inner", {
+        scale: targetPos.scale,
+        xPercent: targetPos.xPercent,
+        yPercent: targetPos.yPercent,
+        ease: "power1.inOut",
+        duration: 1
+      });
+
+      if (pathId) {
+        tl.to(pathId, {
+          strokeDashoffset: 0,
+          ease: "power1.out",
+          duration: 0.6
+        }, "<");
+      }
+
+      ScrollTrigger.create({
+        trigger: targetId,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => {
+          if (flagId) {
+            const flagEl = document.querySelector(flagId);
+            flagEl.innerText = flagEl.dataset.flag;
+            gsap.to(flagId, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.5)" });
+          }
+        },
+        onLeave: () => {
+          if (flagId) {
+            const flagEl = document.querySelector(flagId);
+            gsap.to(flagId, {
+              scale: 0,
+              duration: 0.1,
+              onComplete: () => {
+                flagEl.innerHTML =
+                  '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/100px-Flag_of_Thailand.svg.png" style="width: 40px; height: auto; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">';
+                gsap.to(flagId, { scale: 1, duration: 0.1 });
+              }
+            });
+          }
+        },
+        onEnterBack: () => {
+          if (flagId) {
+            const flagEl = document.querySelector(flagId);
+            gsap.to(flagId, {
+              scale: 0, duration: 0.2,
+              onComplete: () => {
+                flagEl.innerText = flagEl.dataset.flag;
+                gsap.to(flagId, { scale: 1, duration: 0.3 });
+              }
+            });
+          }
+        },
+        onLeaveBack: () => {
+          if (flagId) gsap.to(flagId, { scale: 0, duration: 0.3 });
+        }
+      });
+    }
+
+    createScene("#sec-jp", "jp", "#path-jp", "#flag-jp");
+    createScene("#sec-cn", "cn", "#path-cn", "#flag-cn");
+    createScene("#sec-au", "au", "#path-au", "#flag-au");
+    createScene("#sec-fr", "fr", "#path-fr", "#flag-fr");
+    createScene("#sec-us", "us", "#path-us", "#flag-us");
+
+    const overviewPos = calculateTransform(locations.overview);
+
+    gsap.to(".map-inner", {
+      scale: overviewPos.scale,
+      xPercent: overviewPos.xPercent,
+      yPercent: overviewPos.yPercent,
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: "#sec-outro",
+        start: "top 85%",
+        end: "center center",
+        scrub: 1.5
+      }
+    });
+
+    document.querySelectorAll('.content-card').forEach(card => {
+      gsap.to(card, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 45%",
+          end: "bottom top",
+          toggleActions: "play reverse play reverse"
+        }
+      });
+    });
+
+    // แสดง map + ซ่อน parallax เฉพาะตอนเข้าโซนแผนที่
+    const mapLayers = gsap.utils.toArray([
+      ".map-fixed-container",
+      ".map-texture-overlay",
+      ".map-vignette-overlay"
+    ]);
+
+    const parallax = document.querySelector(".parallax-container");
+
+    gsap.set(mapLayers, { opacity: 0, pointerEvents: "none" });
+
+    ScrollTrigger.create({
+      trigger: "#sec-intro",
+      start: "top center",
+      end: "top top",
+      onEnter: () => {
+        mapLayers.forEach(el => el.style.pointerEvents = "auto");
+        gsap.to(mapLayers, { opacity: 1, duration: 0.5 });
+        gsap.to(parallax, { opacity: 0, duration: 0.5 });
+      },
+      onLeaveBack: () => {
+        gsap.to(mapLayers, {
+          opacity: 0,
+          duration: 0.5,
+          onComplete: () => {
+            mapLayers.forEach(el => el.style.pointerEvents = "none");
+          }
+        });
+        gsap.to(parallax, { opacity: 1, duration: 0.5 });
+      }
+    });
+  </script>
+
+  <!-- Page 2 : Reveal + Bar Chart + Donut Spin + Tooltip -->
+  <script>
+    // Reveal sections
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // Bar chart: grow from 0
+    const chartInner = document.getElementById('chart-inner');
+    const barEls = document.querySelectorAll('.bar');
+
+    if (chartInner) {
+      const chartObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            barEls.forEach(bar => {
+              const h = bar.dataset.height;
+              if (h) {
+                bar.style.height = h + 'px';
+              }
+            });
+            chartObserver.unobserve(chartInner);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      chartObserver.observe(chartInner);
+    }
+
+    // Donut spin when export-section in view
+    const exportSection = document.querySelector('.export-section');
+    const donuts = document.querySelectorAll('.donut');
+
+    if (exportSection && donuts.length) {
+      const donutObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            donuts.forEach(donut => donut.classList.add('spin'));
+            donutObserver.unobserve(exportSection);
+          }
+        });
+      }, { threshold: 0.4 });
+
+      donutObserver.observe(exportSection);
+    }
+
+    // tooltip สำหรับ bar-group และ donut-card
+    const tooltip = document.getElementById('tooltip');
+
+    function attachTooltip(selectors) {
+      document.querySelectorAll(selectors).forEach(el => {
+        const text = el.dataset.tooltip;
+        if (!text) return;
+
+        el.addEventListener('mousemove', (e) => {
+          tooltip.textContent = text;
+          tooltip.style.left = e.clientX + 12 + 'px';
+          tooltip.style.top = e.clientY + 12 + 'px';
+          tooltip.classList.add('visible');
+        });
+
+        el.addEventListener('mouseleave', () => {
+          tooltip.classList.remove('visible');
+        });
+      });
+    }
+
+    attachTooltip('.bar-group');
+    attachTooltip('.donut-card');
+  </script>
+
+</body>
+
+</html>
